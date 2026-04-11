@@ -1,47 +1,185 @@
-# 🎬 Film Revenue Analysis and Prediction System
+# Film Revenue Analysis and Prediction System
 
-A Machine Learning–based web application that analyzes movie data and predicts film revenue using historical datasets. The system provides an interactive dashboard for better visualization and decision-making.
+A cinematic full-stack machine learning web app that predicts film revenue, visualizes market trends, and helps users compare movie investment scenarios.
 
----
+This project is designed so a GitHub user can clone, set up, and run everything on Windows with one-click scripts.
 
-## 🚀 Features
+## Live Project Snapshot
+- Frontend: React application with animated cinematic UI
+- Backend: FastAPI prediction API
+- ML Models: Ensemble of Random Forest, Gradient Boosting, XGBoost, and LightGBM
+- Main use case: Predict expected revenue, ROI, and confidence for a movie idea
 
-- 🎯 Predict movie revenue using Machine Learning
-- 📊 Interactive dashboard with charts and insights
-- 📈 Analyze factors like budget, popularity, runtime, and ratings
-- 🌐 Full-stack application (React + Flask)
-- 💡 User-friendly interface
+## Features
+- Revenue prediction with confidence score and ROI breakdown
+- Multiple analysis pages: Dashboard, Predictor, Explorer, Compare, Trends, What-If, AI Insights, Portfolio Builder
+- Cinematic UI with rolling film reel background and animated sections
+- API endpoints for health checks, stats, predictions, trends, and movie comparison
+- Windows scripts for setup/start/stop workflow
 
----
+## Tech Stack
+- Frontend: React, React Router, Chart.js, Recharts, Framer Motion, Three.js
+- Backend: FastAPI, Uvicorn, Pydantic
+- ML/Data: scikit-learn, XGBoost, LightGBM, NumPy, Pandas, joblib
+- Tooling: npm, Python pip, batch scripts for Windows automation
 
-## 🧠 Technologies Used
+## What GitHub Users Will See
+After opening this repository, users can:
+- Read this README for complete setup and usage
+- Run `setup_windows.bat` once
+- Run `start_windows.bat` to launch backend + frontend
+- Open `http://localhost:3000` for the app and `http://localhost:5000/health` for API health
 
-### 🔹 Frontend
-- React.js
-- Chart.js
-- Axios
+## Project Structure
+```text
+Film-Revenue-Analysis/
+├── backend/
+│   ├── main.py                 # FastAPI server
+│   ├── advanced_train.py       # Model training pipeline
+│   ├── requirements.txt
+│   └── *.pkl                   # Trained model artifacts (generated)
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.js
+│   │   └── index.css
+│   └── package.json
+├── setup_windows.bat
+├── start_windows.bat
+├── stop_windows.bat
+└── run_project.bat
+```
 
-### 🔹 Backend
-- Flask (Python)
-- REST API
+## Quick Start (Windows - Recommended)
+### 1) Clone the repository
+```bash
+git clone https://github.com/Inamulhassan-dev/Film-Revenue-Analysis.git
+cd Film-Revenue-Analysis
+```
 
-### 🔹 Machine Learning
-- Scikit-learn
-- Pandas, NumPy
+### 2) Setup all dependencies and required files
+Double-click `setup_windows.bat` or run:
+```bash
+setup_windows.bat
+```
+This script:
+- checks Python and Node/npm
+- installs backend and frontend dependencies
+- creates sample dataset if missing
+- trains ML models if model files are missing
 
----
+### 3) Start the project
+Double-click `start_windows.bat` or run:
+```bash
+start_windows.bat
+```
 
-## 📊 Dataset
+### 4) Stop running services
+Double-click `stop_windows.bat` or run:
+```bash
+stop_windows.bat
+```
 
-- Source: Kaggle / TMDb Movie Dataset
-- Features used:
-  - Budget
-  - Revenue
-  - Runtime
-  - Popularity
-  - Vote Average
-  - Release Year
+### One-click option
+```bash
+run_project.bat
+```
 
----
+## Manual Setup (Optional)
+If you prefer manual control:
 
-## ⚙️ System Architecture
+### Backend
+```bash
+python -m pip install -r backend/requirements.txt
+cd backend
+python main.py
+```
+
+### Frontend (new terminal)
+```bash
+cd frontend
+npm install
+npm start
+```
+
+## API Endpoints
+Base URL: `http://localhost:5000`
+
+- `GET /` - API information
+- `GET /health` - health status
+- `GET /stats` - dataset and feature stats
+- `GET /trends` - industry trends summary
+- `POST /predict` - basic prediction
+- `POST /predict/detailed` - detailed prediction with confidence intervals
+- `POST /predict/all-models` - prediction from each model
+- `POST /compare` - compare multiple movie scenarios
+
+### Example Predict Request
+```json
+{
+  "budget": 120000000,
+  "runtime": 130,
+  "popularity": 70,
+  "rating": 7.6,
+  "release_date": "2026-07-10",
+  "genre_count": 2
+}
+```
+
+## Screenshot Guide (for GitHub README)
+To make this README visually complete, add screenshots into `docs/screenshots/` and use the markdown blocks below.
+
+Recommended files:
+- `docs/screenshots/home.png`
+- `docs/screenshots/dashboard.png`
+- `docs/screenshots/predictor.png`
+- `docs/screenshots/compare.png`
+- `docs/screenshots/trends.png`
+- `docs/screenshots/whatif.png`
+
+Markdown template:
+```md
+## Screenshots
+
+### Home Page
+![Home Page](docs/screenshots/home.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Predictor
+![Predictor](docs/screenshots/predictor.png)
+
+### Compare Movies
+![Compare Movies](docs/screenshots/compare.png)
+
+### Trends
+![Trends](docs/screenshots/trends.png)
+
+### What-If Analysis
+![What-If Analysis](docs/screenshots/whatif.png)
+```
+
+Tips for clean screenshots:
+- Run app in full-screen browser
+- Use consistent zoom (100%)
+- Capture one screenshot per major page
+- Keep filenames lowercase and simple
+
+## Dataset and Modeling Notes
+- Primary source style: TMDb/Kaggle-style movie metadata
+- Key features include budget, runtime, popularity, vote average, and release timing fields
+- Ensemble prediction is computed from multiple trained regressors
+
+## Developer / Author
+- Developed by: `Inamulhassan-dev`
+- Contact email: `inamulhassan20006@gmail.com`
+- Repository: `https://github.com/Inamulhassan-dev/Film-Revenue-Analysis`
+
+## Acknowledgements
+- Open movie dataset communities (Kaggle/TMDb ecosystem)
+- Open-source Python and React ecosystem maintainers
+
+## License
+No license file is currently included. If you want public reuse protection/permissions, add a `LICENSE` file (MIT is common for portfolio projects).
