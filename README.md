@@ -52,6 +52,11 @@ Film-Revenue-Analysis/
 ```
 
 ## Quick Start (Windows - Recommended)
+Prerequisites:
+- Git installed
+- Python 3.10+ installed and added to PATH
+- Node.js LTS installed (includes npm) and added to PATH
+
 ### 1) Clone the repository
 ```bash
 git clone https://github.com/Inamulhassan-dev/Film-Revenue-Analysis.git
@@ -68,6 +73,8 @@ This script:
 - installs backend and frontend dependencies
 - creates sample dataset if missing
 - trains ML models if model files are missing
+
+If a command is not recognized after installation, close and reopen terminal, then rerun the script.
 
 ### 3) Start the project
 Double-click `start_windows.bat` or run:
@@ -166,6 +173,31 @@ Tips for clean screenshots:
 - Use consistent zoom (100%)
 - Capture one screenshot per major page
 - Keep filenames lowercase and simple
+
+## Common Clone Issues and Fixes (Windows)
+1) `python` not recognized
+- Install Python 3.10+
+- During install, enable "Add Python to PATH"
+- Reopen terminal and run `python --version`
+
+2) `npm` not recognized
+- Install Node.js LTS
+- Reopen terminal and run `npm --version`
+
+3) PowerShell execution policy error
+- Run PowerShell as user and execute:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+4) Unicode/emoji display issues in terminal
+- Scripts set UTF-8 mode with `chcp 65001`, and start commands now inherit UTF-8.
+
+5) Dependency compatibility on newer Python
+- `backend/requirements.txt` now uses compatible ranges instead of strict pinning.
+
+6) `axios` module missing in frontend
+- `axios` is now included in `frontend/package.json` and lockfile.
 
 ## Dataset and Modeling Notes
 - Primary source style: TMDb/Kaggle-style movie metadata

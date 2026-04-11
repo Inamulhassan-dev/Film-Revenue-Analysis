@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 title Film Revenue Analyzer - Setup (Windows)
+chcp 65001 >nul
 
 echo ==============================================
 echo   Film Revenue Analyzer - Windows Setup

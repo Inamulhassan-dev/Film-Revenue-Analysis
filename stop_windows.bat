@@ -1,6 +1,7 @@
 @echo off
 setlocal
 title Film Revenue Analyzer - Stop
+chcp 65001 >nul
 
 echo ==============================================
 echo   Film Revenue Analyzer - Stopping Services

@@ -1,6 +1,7 @@
 @echo off
 setlocal
 title Film Revenue Analyzer - Start
+chcp 65001 >nul
 
 echo ==============================================
 echo   Film Revenue Analyzer - Starting Services
@@ -20,13 +21,13 @@ if not exist "frontend\package.json" (
 )
 
 echo Starting Backend (FastAPI)...
-start "Film Backend" cmd /k "cd /d backend && python main.py"
+start "Film Backend" cmd /k "chcp 65001 >nul && cd /d backend && python main.py"
 
 echo Waiting for backend...
 timeout /t 4 /nobreak >nul
 
 echo Starting Frontend (React)...
-start "Film Frontend" cmd /k "cd /d frontend && npm start"
+start "Film Frontend" cmd /k "chcp 65001 >nul && cd /d frontend && npm start"
 
 echo.
 echo App starting:
