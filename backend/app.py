@@ -2,12 +2,15 @@ from flask import Flask, request, jsonify
 import pickle
 import numpy as np
 from flask_cors import CORS
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
 
 app = Flask(__name__)
 CORS(app)
 
 print("📦 Loading model...")
-model = pickle.load(open("model.pkl", "rb"))
+model = pickle.load(open(BASE_DIR / "model.pkl", "rb"))
 print("✅ Model loaded!")
 
 @app.route("/")

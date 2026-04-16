@@ -7,6 +7,11 @@ import pandas as pd
 import pickle
 import joblib
 from datetime import datetime
+from pathlib import Path
+
+# All paths resolved relative to this file's directory so the server can be
+# started from any working directory (e.g. `python backend/main.py` from repo root).
+BASE_DIR = Path(__file__).parent
 
 app = FastAPI(title="Film Revenue Analysis API", version="3.0.0")
 
@@ -24,16 +29,16 @@ print("=" * 60)
 
 print("\n📦 Loading models...")
 models = {
-    'random_forest': joblib.load("random_forest.pkl"),
-    'gradient_boosting': joblib.load("gradient_boosting.pkl"),
-    'xgboost': joblib.load("xgboost.pkl"),
-    'lightgbm': joblib.load("lightgbm.pkl")
+    'random_forest': joblib.load(BASE_DIR / "random_forest.pkl"),
+    'gradient_boosting': joblib.load(BASE_DIR / "gradient_boosting.pkl"),
+    'xgboost': joblib.load(BASE_DIR / "xgboost.pkl"),
+    'lightgbm': joblib.load(BASE_DIR / "lightgbm.pkl")
 }
 
-with open("ensemble_info.pkl", "rb") as f:
+with open(BASE_DIR / "ensemble_info.pkl", "rb") as f:
     ensemble_info = pickle.load(f)
 
-with open("dataset_stats.pkl", "rb") as f:
+with open(BASE_DIR / "dataset_stats.pkl", "rb") as f:
     stats = pickle.load(f)
 
 feature_cols = ensemble_info['feature_cols']
@@ -268,5 +273,8 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
+    import os
+    # Change to the backend directory so uvicorn's reload watcher works correctly
+    os.chdir(BASE_DIR)
     print("\n🚀 Starting FastAPI server on http://localhost:5000")
     uvicorn.run("main:app", host="0.0.0.0", port=5000, reload=True)

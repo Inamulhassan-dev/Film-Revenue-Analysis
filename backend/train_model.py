@@ -1,13 +1,22 @@
 import pandas as pd
 import numpy as np
 import pickle
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
+
+BASE_DIR = Path(__file__).parent
+DATASET_PATH = BASE_DIR.parent / "dataset" / "movies_metadata.csv"
 
 print("📥 Loading dataset...")
 
 # Load dataset
-df = pd.read_csv("../dataset/movies_metadata.csv", low_memory=False)
+if not DATASET_PATH.exists():
+    raise FileNotFoundError(
+        f"Dataset not found at {DATASET_PATH}.\n"
+        "Run setup_windows.bat (Windows) or 'make setup' (Linux/macOS) to generate a sample dataset."
+    )
+df = pd.read_csv(DATASET_PATH, low_memory=False)
 
 # Select required columns
 df = df[['budget', 'revenue', 'runtime', 'popularity', 'vote_average', 'release_date']]
@@ -47,6 +56,6 @@ model = RandomForestRegressor(n_estimators=150, random_state=42)
 model.fit(X_train, y_train)
 
 # Save model
-pickle.dump(model, open("model.pkl", "wb"))
+pickle.dump(model, open(BASE_DIR / "model.pkl", "wb"))
 
 print("🎉 Model trained and saved as model.pkl")
