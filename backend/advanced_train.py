@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import os
+from pathlib import Path
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.preprocessing import StandardScaler
@@ -10,12 +11,22 @@ import xgboost as xgb
 import lightgbm as lgb
 import joblib
 
+# All paths resolved relative to this file so the script can be run from any directory.
+BASE_DIR = Path(__file__).parent
+DATASET_PATH = BASE_DIR.parent / "dataset" / "movies_metadata.csv"
+
 print("=" * 60)
 print("🚀 ADVANCED ML TRAINING PIPELINE")
 print("=" * 60)
 
 print("\n📥 Loading dataset...")
-df = pd.read_csv("../dataset/movies_metadata.csv", low_memory=False)
+if not DATASET_PATH.exists():
+    raise FileNotFoundError(
+        f"Dataset not found at {DATASET_PATH}.\n"
+        "Run setup_windows.bat (Windows) or 'make setup' (Linux/macOS) to generate a sample dataset,\n"
+        "or download the TMDb/Kaggle movies_metadata.csv and place it in the dataset/ folder."
+    )
+df = pd.read_csv(DATASET_PATH, low_memory=False)
 print(f"✅ Loaded {len(df)} movies")
 
 print("\n🔧 Feature Engineering...")
@@ -78,7 +89,7 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # Save scaler
-joblib.dump(scaler, 'scaler.pkl')
+joblib.dump(scaler, BASE_DIR / 'scaler.pkl')
 
 # Define models to train
 models = {}
@@ -145,7 +156,7 @@ models['lightgbm'] = lgb_model
 # Save all models
 print("\n💾 Saving models...")
 for name, model in models.items():
-    filename = f"{name}.pkl"
+    filename = BASE_DIR / f"{name}.pkl"
     joblib.dump(model, filename)
     print(f"  ✅ Saved {filename}")
 
@@ -222,7 +233,7 @@ ensemble_info = {
         'MAPE': ensemble_mape
     }
 }
-with open('ensemble_info.pkl', 'wb') as f:
+with open(BASE_DIR / 'ensemble_info.pkl', 'wb') as f:
     pickle.dump(ensemble_info, f)
 
 # Save dataset stats for frontend
@@ -236,7 +247,7 @@ stats = {
     'avg_runtime': float(features_df['runtime'].mean()),
     'top_genres': features_df['genres'].value_counts().head(10).to_dict()
 }
-with open('dataset_stats.pkl', 'wb') as f:
+with open(BASE_DIR / 'dataset_stats.pkl', 'wb') as f:
     pickle.dump(stats, f)
 
 print("\n" + "=" * 60)
